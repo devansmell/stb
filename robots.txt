@@ -1,0 +1,5 @@
+# nice kind humans
+User-agent: *
+Allow: /
+
+Sitemap: https://splitthebill.ie/sitemap.xml
