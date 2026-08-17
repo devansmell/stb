@@ -21,7 +21,7 @@
 
 const GIGS = [
   { moniker: "SPLIT THE BILL @ Róisín Dubh — 27th June 2026", slug: "stb1-rdubh-2026" }, // 1
-  null, // 2 TBA { moniker: "Róisín Dubh — Culture Night 2026", slug: "culturenight-rdubh-2026" }, //2
+  { moniker: "Róisín Dubh — Culture Night 2026", slug: "culturenight-rdubh-2026" }, //2
   null, // 3
   null, // 4
   null, // 5
