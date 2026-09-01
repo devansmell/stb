@@ -81,17 +81,29 @@
         </div>
       </header>
 
-      <div class="gig-poster-wrap">
-        <img class="gig-poster" src="/gigs/posters/stb1-rdubh-2026.jpg" alt="Róisín Dubh, Galway gig poster">
-      </div>
+      <div class="gig-card-wrap">
+        <div class="gig-card">
 
-      <div class="contact-lines">
-        <p class="contact-line">Róisín Dubh, GALWAY</p>
-        <p class="contact-line">27 June 2026 &middot; doors 5pm</p>
-        <p class="contact-line"><a href="https://instagram.com/splitthebillgig">view the gig</a></p>
+          <div class="gig-poster-wrap">
+            <img class="gig-poster" id="gig-poster" src="" alt="">
+          </div>
+
+          <div class="gig-info">
+            <h2 class="gig-venue" id="gig-venue"></h2>
+            <p class="gig-datetime" id="gig-datetime"></p>
+
+            <ul class="lineup-list" id="lineup-list" aria-label="Lineup"></ul>
+
+            <p class="gig-cta" id="gig-cta"></p>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
 
+  <script>const PAGE_SLUG = "stb1-rdubh-2026";</script>
+  <script src="/gigs/gigs-data.js"></script>
+  <script src="/gigs/gig-detail.js"></script>
 </body>
 </html>

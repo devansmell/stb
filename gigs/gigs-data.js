@@ -1,27 +1,87 @@
 /*
   GIGS DATA
   ---------
-  One entry per slot on the gigs page. There are always 25 slots.
+  This is the ONLY place gig info gets typed in. Both the listing
+  page (/gigs/) and each gig's own page (/gigs/<slug>.html) read
+  from this file — nothing is duplicated by hand anymore.
 
-  Leave a slot as `null` if the gig isn't announced yet — it will render
-  as a row of "?????????" placeholders (not clickable, no hover state).
+  There are always 25 slots. Leave a slot as `null` if the gig
+  isn't announced yet — it renders as a row of "?????????" on the
+  listing page. Don't add or remove slots, just swap null <-> object.
 
-  To add a real gig, replace `null` with an object like:
+  FIELDS (all required unless marked optional):
 
-    { moniker: "Whelans, Dublin — 12 Sept", slug: "whelans-dublin-2026" }
+    slug          matches the filename: gigs/<slug>.html
+    moniker       the text shown on the /gigs/ listing page
+    venue         e.g. "Róisín Dubh"
+    city          e.g. "Galway"
+    dateISO       "YYYY-MM-DD", drives the ticket -> "view the gig" swap
+    dateDisplay   human date, e.g. "27 June 2026"
+    doorsTime     human time, e.g. "8pm" or "tba"
+    poster        path to the poster image, e.g. "/gigs/posters/<slug>.jpg"
+                  (optional — leave "" if there's no poster yet, and the
+                  poster slot just won't render)
+    lineup        array of { name, instagram }. instagram is optional,
+                  leave it "" for acts without one / not linking it.
+                  Leave the whole array empty ([]) if there's no lineup
+                  breakdown for this gig.
+    cta           either:
+                    { fixed: { label: "...", url: "..." } }
+                  for a link that's always the same regardless of date
+                  (e.g. a free show pointing at the venue's listing), or:
+                    { ticketUrl: "...", viewGigUrl: "..." }
+                  for the automatic swap: shows "tickets" -> ticketUrl
+                  before the gig, "view the gig" -> viewGigUrl the day
+                  after (viewGigUrl can just be the main instagram as a
+                  placeholder until photos are up).
 
-  - "moniker" is the text shown on the gigs page.
-  - "slug" builds the link: it will point to /gigs/<slug>.html
-    So the above example links to /gigs/whelans-dublin-2026.html
-    Copy gigs/_template.html to that filename and edit it for the gig.
-
-  Don't add or remove slots — just swap null <-> object. Keeping all
-  25 slots present keeps the two-column layout stable.
+  SEO NOTE: the meta tags / JSON-LD at the top of each gigs/<slug>.html
+  file are NOT pulled from here — those have to stay as plain static
+  text for search engines and social platforms that don't run
+  JavaScript to read them. So when you fill in a gig here, you'll also
+  paste the same venue/date/lineup into that page's <head> once. That's
+  the one bit of duplication that can't be avoided — everything in the
+  visible page body comes from this file only.
 */
 
 const GIGS = [
-  { moniker: "SPLIT THE BILL @ Róisín Dubh — 27th June 2026", slug: "stb1-rdubh-2026" }, // 1
-  { moniker: "Róisín Dubh — Culture Night 2026", slug: "culturenight-rdubh-2026" }, //2
+  {
+    slug: "stb1-rdubh-2026",
+    moniker: "SPLIT THE BILL @ Róisín Dubh — 27th June 2026",
+    venue: "Róisín Dubh",
+    city: "GALWAY",
+    dateISO: "2026-06-27",
+    dateDisplay: "27 June 2026",
+    doorsTime: "5pm",
+    poster: "/gigs/posters/stb1-rdubh-2026.jpg",
+    lineup: [],
+    cta: {
+      ticketUrl: "https://instagram.com/splitthebillgig",
+      viewGigUrl: "https://instagram.com/splitthebillgig"
+    }
+  }, // 1
+  {
+    slug: "culturenight-rdubh-2026",
+    moniker: "Róisín Dubh — Culture Night 2026",
+    venue: "Róisín Dubh",
+    city: "Galway",
+    dateISO: "2026-09-18",
+    dateDisplay: "18 Sept 2026",
+    doorsTime: "tba",
+    poster: "/gigs/posters/culturenight-rdubh-2026.jpg",
+    lineup: [
+      { name: "Copernicus II", instagram: "" },
+      { name: "Big Nothing", instagram: "" },
+      { name: "Cats!", instagram: "" },
+      { name: "Infared", instagram: "" },
+      { name: "Mentality", instagram: "" }
+    ],
+    cta: {
+      // free show, always points at the venue's own listing —
+      // no ticket/view-gig swap needed
+      fixed: { label: "free in", url: "https://roisindubh.net/listings/" }
+    }
+  }, // 2
   null, // 3
   null, // 4
   null, // 5

@@ -8,6 +8,10 @@ function renderGigs() {
   const list = document.getElementById("gig-list");
   if (!list || typeof GIGS === "undefined") return;
 
+  // column-major fill: left column gets the first half, right
+  // column gets the rest (see .gig-list in style.css)
+  list.style.setProperty("--gig-rows", Math.ceil(GIGS.length / 2));
+
   const items = GIGS.map((gig) => {
     const li = document.createElement("li");
 

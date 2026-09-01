@@ -1,0 +1,149 @@
+<!--
+  GIG PAGE TEMPLATE
+  -----------------
+  1. Add a new entry to gigs/gigs-data.js first — venue, date, poster,
+     lineup, ticket link, all of it. That file is the only place gig
+     details get typed in.
+
+  2. Duplicate this file and rename it to match that entry's "slug"
+     e.g. slug "whelans-dublin-2026" -> save as gigs/whelans-dublin-2026.html
+
+  3. Find/replace the {{PLACEHOLDER}}s below — just the SEO ones in
+     <head>. These have to stay static text (search engines and
+     platforms like Facebook/Twitter don't reliably run JavaScript to
+     read meta tags), so this bit of duplication with gigs-data.js is
+     unavoidable. Everything else on the page (poster, venue, date,
+     lineup, ticket/view-gig link) renders automatically from
+     gigs-data.js via gig-detail.js — there's nothing else to edit
+     in the body.
+
+     {{VENUE}}          venue name, e.g. Whelans
+     {{CITY}}            city, e.g. Dublin
+     {{HEADLINE_ACT}}     act(s) on the bill, comma separated, SEO only
+                          e.g. Band Name, Support Act
+     {{DATE_DISPLAY}}     human date, e.g. 12 Sept 2026
+     {{DATE_ISO}}         event date, ISO format, e.g. 2026-09-12
+     {{DOORS_TIME}}       human time, e.g. 8pm
+     {{DOORS_TIME_24H}}    24hr time, e.g. 20:00
+     {{TICKET_URL}}       link to buy tickets (or the fixed CTA url)
+     {{PRICE}}            ticket price in euro, numeric only, e.g. 15
+                          (use 0 for free shows)
+     {{ON_SALE_DATE}}     ISO date tickets go live, e.g. 2026-07-01
+     {{SLUG}}            must match the filename AND the slug you
+                          added in gigs-data.js
+     {{POSTER_IMAGE}}     path to the poster, e.g. /gigs/posters/whelans-dublin-2026.jpg
+                          should match the "poster" field for this
+                          gig in gigs-data.js
+
+  4. This file itself (_template.html) is never linked to directly —
+     it's just the starting point for new gig pages.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{VENUE}}, {{CITY}} // split the bill</title>
+<meta name="description" content="{{HEADLINE_ACT}} at {{VENUE}}, {{CITY}}. {{DATE_DISPLAY}}, doors {{DOORS_TIME}}. booked by split the bill, galway's independent gig promoters.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://splitthebill.ie/gigs/{{SLUG}}.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="split the bill">
+<meta property="og:title" content="{{VENUE}}, {{CITY}} // split the bill">
+<meta property="og:description" content="{{HEADLINE_ACT}} at {{VENUE}}, {{CITY}}. {{DATE_DISPLAY}}, doors {{DOORS_TIME}}.">
+<meta property="og:url" content="https://splitthebill.ie/gigs/{{SLUG}}.html">
+<meta property="og:image" content="https://splitthebill.ie{{POSTER_IMAGE}}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_IE">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{VENUE}}, {{CITY}} // split the bill">
+<meta name="twitter:description" content="{{HEADLINE_ACT}} at {{VENUE}}, {{CITY}}. {{DATE_DISPLAY}}, doors {{DOORS_TIME}}.">
+<meta name="twitter:image" content="https://splitthebill.ie{{POSTER_IMAGE}}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MusicEvent",
+  "name": "{{HEADLINE_ACT}} at {{VENUE}}",
+  "startDate": "{{DATE_ISO}}T{{DOORS_TIME_24H}}",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "location": {
+    "@type": "Place",
+    "name": "{{VENUE}}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "{{CITY}}",
+      "addressCountry": "IE"
+    }
+  },
+  "image": ["https://splitthebill.ie{{POSTER_IMAGE}}"],
+  "performer": {
+    "@type": "PerformingGroup",
+    "name": "{{HEADLINE_ACT}}"
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "Split The Bill",
+    "url": "https://splitthebill.ie/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "{{TICKET_URL}}",
+    "price": "{{PRICE}}",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "{{ON_SALE_DATE}}"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <div class="page">
+    <img class="bg" src="/assets/background.webp" alt="" aria-hidden="true">
+    <div class="bg-overlay" aria-hidden="true"></div>
+
+    <div class="page-content">
+      <header class="page-header">
+        <img class="corner-logo" src="/assets/logo.png" alt="split the bill logo">
+        <div class="page-heading">
+          <h1 class="page-title">gigs</h1>
+          <a href="/gigs/" class="back-link">&lt;-- back</a>
+        </div>
+      </header>
+
+      <div class="gig-card-wrap">
+        <div class="gig-card">
+
+          <div class="gig-poster-wrap">
+            <img class="gig-poster" id="gig-poster" src="" alt="">
+          </div>
+
+          <div class="gig-info">
+            <h2 class="gig-venue" id="gig-venue"></h2>
+            <p class="gig-datetime" id="gig-datetime"></p>
+
+            <ul class="lineup-list" id="lineup-list" aria-label="Lineup"></ul>
+
+            <p class="gig-cta" id="gig-cta"></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>const PAGE_SLUG = "{{SLUG}}";</script>
+  <script src="/gigs/gigs-data.js"></script>
+  <script src="/gigs/gig-detail.js"></script>
+</body>
+</html>

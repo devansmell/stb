@@ -337,13 +337,21 @@ body {
   padding: 0;
 
   /*
-    Two predictable columns.
+    Column-major layout: fills the left column top-to-bottom
+    first, then continues into the right column — matching the
+    original mockup's reading order (1-11 down the left, 12-25
+    down the right), not a row-by-row left/right alternation.
 
-    minmax(0, 1fr) is important:
-    it prevents long gig names from forcing
-    the grid wider than the viewport.
+    --gig-rows is set inline by render.js as ceil(total / 2),
+    so this stays correct even if the slot count in
+    gigs-data.js ever changes.
+
+    minmax(0, 1fr) prevents long gig names from forcing the
+    grid wider than the viewport.
   */
   display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(var(--gig-rows, 13), auto);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
   column-gap: clamp(2rem, 5vw, 4.5rem);
@@ -404,29 +412,173 @@ a.gig-entry:hover {
 }
 
 /* ============================================================
-   POSTER / GIG DETAIL PAGE
+   GIG DETAIL PAGE (poster + venue/date/lineup/cta)
    ============================================================ */
 
-.gig-poster-wrap {
+.gig-card-wrap {
   display: flex;
+  align-items: center;
   justify-content: center;
 
   width: 100%;
+  min-height: 0;
 
-  margin-top: clamp(2rem, 5vh, 4rem);
+  padding:
+    clamp(2rem, 6vh, 4.5rem)
+    0;
+}
+
+.gig-card {
+  display: flex;
+  align-items: stretch;
+
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+
+  max-width: 980px;
+  width: 100%;
+
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+
+  background: rgba(10, 2, 4, 0.4);
+  border: 1px solid rgba(244, 239, 230, 0.12);
+  border-radius: 6px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.gig-poster-wrap {
+  flex: 0 0 clamp(200px, 32vw, 340px);
+
+  display: block;
 }
 
 .gig-poster {
   display: block;
 
-  width: min(42vw, 420px);
+  width: 100%;
+  height: 100%;
 
   aspect-ratio: 4 / 5;
 
-  height: auto;
+  border-radius: 4px;
+  overflow: hidden;
 
   object-fit: cover;
   object-position: center;
+
+  background: rgba(244, 239, 230, 0.06);
+}
+
+.gig-info {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: clamp(1rem, 2vh, 1.5rem);
+}
+
+.gig-venue {
+  color: var(--ink);
+
+  font-style: italic;
+  font-weight: 400;
+
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.15;
+
+  margin: 0;
+}
+
+.gig-datetime {
+  color: var(--ink);
+
+  font-style: italic;
+  font-weight: 400;
+
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  opacity: 0.85;
+
+  margin: 0;
+}
+
+.lineup-list {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.lineup-list li {
+  color: var(--ink);
+
+  font-style: italic;
+  font-weight: 400;
+
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+}
+
+.lineup-link {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.lineup-link:hover {
+  text-decoration: underline;
+}
+
+.lineup-link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.gig-cta-link {
+  display: inline-block;
+  width: fit-content;
+
+  color: var(--ink);
+
+  font-style: italic;
+  font-weight: 400;
+
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+
+  text-decoration: none;
+
+  margin-top: 0.25rem;
+}
+
+.gig-cta-link:hover {
+  text-decoration: underline;
+}
+
+.gig-cta-link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .gig-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .gig-poster-wrap {
+    flex: 0 0 auto;
+    width: min(70vw, 300px);
+  }
+
+  .gig-info {
+    align-items: center;
+  }
 }
 
 /* ============================
@@ -477,37 +629,94 @@ a.gig-entry:hover {
 }
 
 /* ============================================================
-   POSTER WRAP
+   ABOUT PAGE
    ============================================================ */
 
-.poster-wrap {
-  width: min(24vw, 240px);
+.about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  aspect-ratio: 4 / 5;
+  gap: clamp(2rem, 5vh, 3rem);
 
+  max-width: 720px;
   margin: 0 auto;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding:
+    clamp(2rem, 6vh, 4.5rem)
+    0;
 
-  flex: 0 0 auto;
+  text-align: center;
 }
 
-.poster-wrap img {
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.about-text p {
+  color: var(--ink);
+
+  font-style: italic;
+  font-weight: 400;
+
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.6;
+
+  margin: 0;
+}
+
+.about-poster-link {
+  display: block;
+  width: min(50vw, 320px);
+
+  text-decoration: none;
+}
+
+.about-poster-link img {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+
+  border-radius: 4px;
+
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+
+  transition: transform 0.2s ease;
+}
+
+.about-poster-link:hover img {
+  transform: translateY(-3px);
+}
+
+.about-poster-caption {
   display: block;
 
-  width: 100%;
-  height: 100%;
+  margin-top: 0.6rem;
 
-  object-fit: contain;
+  color: var(--ink);
+
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.95rem;
+
+  opacity: 0.85;
+
+  text-decoration: none;
 }
 
-.poster-wrap + .contact-lines {
-  min-height: 0;
+.about-poster-link:hover .about-poster-caption {
+  text-decoration: underline;
+}
 
-  padding-top: clamp(1rem, 2vh, 1.5rem);
-  padding-bottom: 0;
+@media (max-width: 640px) {
+  .about-poster-link {
+    width: min(65vw, 280px);
+  }
 }
 
 /* ============================================================
@@ -554,55 +763,6 @@ a.gig-entry:hover {
 
   .gig-entry {
     font-size: clamp(1rem, 4vw, 1.15rem);
-  }
-
-  /* Gig poster */
-
-  .gig-poster {
-    width: min(78vw, 360px);
-  }
-
-  /* Small poster layout */
-
-  .poster-wrap {
-    width: min(48vw, 190px);
-  }
-
-  .poster-wrap + .contact-lines {
-    gap: 0.9rem;
-    padding-top: 0.75rem;
-  }
-}
-
-/* ============================================================
-   SHORT DESKTOP SCREENS
-   ============================================================ */
-
-@media (max-height: 800px) and (min-width: 641px) {
-
-  .poster-wrap {
-    width: min(19vw, 190px);
-  }
-
-  .poster-wrap + .contact-lines {
-    gap: 0.9rem;
-    padding-top: 0.75rem;
-  }
-}
-
-/* ============================================================
-   VERY SHORT SCREENS
-   ============================================================ */
-
-@media (max-height: 700px) {
-
-  .poster-wrap {
-    width: min(17vw, 170px);
-  }
-
-  .poster-wrap + .contact-lines {
-    gap: 0.65rem;
-    padding-top: 0.5rem;
   }
 }
 
