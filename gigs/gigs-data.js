@@ -67,17 +67,17 @@ const GIGS = [
     city: "Galway",
     dateISO: "2026-09-18",
     dateDisplay: "18 Sept 2026",
-    doorsTime: "tba",
+    doorsTime: "5pm",
     poster: "/gigs/posters/culturenight-rdubh-2026.jpg",
     lineup: [
-      { name: "Copernicus II", instagram: "" },
-      { name: "Big Nothing", instagram: "" },
-      { name: "Cats!", instagram: "" },
-      { name: "Infared", instagram: "" },
-      { name: "Mentality", instagram: "" }
+      { name: "Copernicus II", instagram: "copernicus_ii" },
+      { name: "Big Nothing", instagram: "bignothing.band" },
+      { name: "Cats!", instagram: "catsrealband" },
+      { name: "Infared", instagram: "infared_band" },
+      { name: "Mentality", instagram: "mentalityband.ie" }
     ],
     cta: {
-      // free show, always points at the venue's own listing —
+      // free show, always points at the venue's own listing
       // no ticket/view-gig swap needed
       fixed: { label: "free in", url: "https://roisindubh.net/listings/" }
     }
