@@ -79,7 +79,7 @@ const GIGS = [
     cta: {
       // free show, always points at the venue's own listing
       // no ticket/view-gig swap needed
-      fixed: { label: "free in", url: "https://roisindubh.net/listings/" }
+      fixed: { label: "free in", url: "https://roisindubh.net/listings/split-the-bill-culture-night-takeover-2026-09-18-170000-81600" }
     }
   }, // 2
   null, // 3
