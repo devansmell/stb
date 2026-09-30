@@ -88,6 +88,11 @@ function renderGigDetail() {
 
     ctaEl.appendChild(a);
   }
+
+  // expose the matched record so gallery.js (loaded after this file)
+  // doesn't have to repeat the PAGE_SLUG lookup
+  window.CURRENT_GIG = gig;
+  document.dispatchEvent(new CustomEvent("gig:ready", { detail: gig }));
 }
 
 renderGigDetail();
