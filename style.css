@@ -1035,3 +1035,236 @@ a.gig-entry:hover {
     font-size: 1.5rem;
   }
 }
+
+
+/* ============================================================
+   ARTISTS + MEDIA
+   ============================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.artists-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2rem, 5vh, 3.5rem);
+
+  max-width: 1000px;
+  margin: 0 auto;
+
+  padding: clamp(2rem, 5vh, 3.5rem) 0 clamp(3rem, 8vh, 5rem);
+}
+
+.artists-intro {
+  color: var(--ink);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  text-align: center;
+  margin: 0;
+}
+
+.artists-intro a,
+.book-link,
+.artist-links a,
+.photo-credit a,
+.media-contact a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.artists-intro a:hover,
+.book-link:hover,
+.artist-links a:hover,
+.photo-credit a:hover,
+.media-contact a:hover {
+  text-decoration: underline;
+}
+
+.artists-intro a:focus-visible,
+.book-link:focus-visible,
+.artist-links a:focus-visible,
+.photo-credit a:focus-visible,
+.media-contact a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.artist-card {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1.5rem, 4vw, 3rem);
+
+  width: 100%;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+
+  background: rgba(10, 2, 4, 0.4);
+  border: 1px solid rgba(244, 239, 230, 0.12);
+  border-radius: 6px;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.artist-photo {
+  flex: 0 0 clamp(220px, 36%, 380px);
+}
+
+.artist-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.photo-credit {
+  margin: 0.6rem 0 0;
+  color: var(--ink);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.artist-info {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vh, 1.5rem);
+}
+
+.artist-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 260px);
+  max-height: 120px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.artist-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.artist-bio p {
+  margin: 0;
+  color: var(--ink);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  line-height: 1.6;
+}
+
+.artist-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.artist-links a,
+.book-link {
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+}
+
+.artist-embed iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+}
+
+.book-link {
+  width: fit-content;
+}
+
+.media-recent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.media-recent p,
+.media-contact {
+  margin: 0;
+  color: var(--ink);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.media-heading {
+  margin: 0;
+  color: var(--ink);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+@media (max-width: 760px) {
+  .artist-card {
+    flex-direction: column;
+  }
+
+  .artist-photo {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 420px;
+    align-self: center;
+  }
+
+  .artist-logo {
+    align-self: center;
+    object-position: center;
+  }
+
+  .artist-info {
+    align-items: stretch;
+  }
+}
+
+.about-text a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.about-text a:hover {
+  text-decoration: underline;
+}
+
+.about-text a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.nav {
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.6rem;
+}
+
+@media (max-width: 480px) {
+  .nav {
+    gap: 0.6rem 1.25rem;
+  }
+}

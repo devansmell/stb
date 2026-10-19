@@ -21,6 +21,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://splitthebill.ie/artists.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://splitthebill.ie/media.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://splitthebill.ie/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
