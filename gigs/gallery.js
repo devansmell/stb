@@ -12,6 +12,11 @@
   let currentIndex = 0;
   let lastFocused = null;
 
+  function fallbackAlt(gig, photo, index) {
+    const venue = gig && gig.venue ? gig.venue : "gig";
+    return `${venue} photo ${index + 1}${photo.credit ? ", by " + photo.credit : ""}`;
+  }
+
   function init() {
     const gig = window.CURRENT_GIG;
     const wrap = document.getElementById("gig-gallery-wrap");
@@ -42,7 +47,7 @@
 
       const img = document.createElement("img");
       img.src = photo.src;
-      img.alt = photo.alt || "";
+      img.alt = photo.alt || fallbackAlt(gig, photo, index);
       img.loading = "lazy";
 
       btn.appendChild(img);
@@ -99,7 +104,7 @@
     const credit = document.getElementById("lightbox-credit");
 
     img.src = photo.src;
-    img.alt = photo.alt || "";
+    img.alt = photo.alt || fallbackAlt(window.CURRENT_GIG, photo, currentIndex);
 
     if (photo.credit) {
       credit.textContent = `photo: ${photo.credit}`;
