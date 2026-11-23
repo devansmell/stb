@@ -1316,3 +1316,32 @@ a.gig-entry:hover {
     scroll-behavior: auto !important;
   }
 }
+
+.gig-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.gig-cta-button {
+  padding: 0.6rem 1.1rem;
+
+  border: 1px solid rgba(244, 239, 230, 0.35);
+  border-radius: 6px;
+
+  background: rgba(244, 239, 230, 0.06);
+
+  transition: background 0.2s ease;
+}
+
+.gig-cta-button:hover {
+  text-decoration: none;
+  background: rgba(244, 239, 230, 0.16);
+}
+
+@media (max-width: 640px) {
+  .gig-cta {
+    align-items: center;
+  }
+}

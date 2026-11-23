@@ -13,6 +13,8 @@
 
     slug          matches the filename: gigs/<slug>.html
     moniker       the text shown on the /gigs/ listing page
+    title         optional. if set, it is the heading on the gig's own
+                  page, with venue and date shown underneath
     venue         e.g. "Róisín Dubh"
     city          e.g. "Galway"
     dateISO       "YYYY-MM-DD", drives the ticket -> "view the gig" swap
@@ -30,6 +32,9 @@
                   for a link that's always the same regardless of date
                   (e.g. a free show pointing at the venue's listing), or:
                     { ticketUrl: "...", viewGigUrl: "..." }
+                  either form can also carry an "add to calendar"
+                  button until the gig date passes:
+                    calendar: { label: "...", url: "/file.ics" }
                   for the automatic swap: shows "tickets" -> ticketUrl
                   before the gig, "view the gig" -> viewGigUrl the day
                   after (viewGigUrl can just be the main instagram as a
@@ -142,7 +147,25 @@ const GIGS = [
       ]
     }
   }, // 2
-  null, // 3
+  {
+    slug: "copernicus-ii-live-rdubh-2026",
+    moniker: "17th December 2026 – Copernicus II album release",
+    title: "Copernicus II Live",
+    venue: "Róisín Dubh",
+    city: "Galway",
+    dateISO: "2026-12-17",
+    dateDisplay: "17 Dec 2026",
+    doorsTime: "midnight",
+    poster: "/gigs/posters/Copernicus%20II%20poster%2017%20December.jpg",
+    lineup: [
+      { name: "Copernicus II", instagram: "copernicus_ii" },
+      { name: "Big Nothing", instagram: "bignothing.band" }
+    ],
+    cta: {
+      viewGigUrl: "https://instagram.com/splitthebillgig",
+      calendar: { label: "add event to calendar", url: "/copernicus-ii-live.ics" }
+    }
+  }, // 3
   null, // 4
   null, // 5
   null, // 6

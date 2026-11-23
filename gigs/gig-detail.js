@@ -24,7 +24,7 @@ function renderGigDetail() {
   if (posterImg) {
     if (gig.poster) {
       posterImg.src = gig.poster;
-      posterImg.alt = `${gig.venue} gig poster`;
+      posterImg.alt = gig.title ? `${gig.title} poster` : `${gig.venue} gig poster`;
     } else {
       posterImg.closest(".gig-poster-wrap")?.remove();
     }
@@ -32,10 +32,17 @@ function renderGigDetail() {
 
   // venue / date
   const venueEl = document.getElementById("gig-venue");
-  if (venueEl) venueEl.textContent = `${gig.venue}, ${gig.city}`;
+  if (venueEl) venueEl.textContent = gig.title || `${gig.venue}, ${gig.city}`;
 
   const dateEl = document.getElementById("gig-datetime");
-  if (dateEl) dateEl.textContent = `${gig.dateDisplay} \u00B7 doors ${gig.doorsTime}`;
+  if (dateEl) {
+    const when = `${gig.dateDisplay} \u00B7 doors ${gig.doorsTime}`;
+    if (gig.title) {
+      dateEl.replaceChildren(`${gig.venue}, ${gig.city}`, document.createElement("br"), when);
+    } else {
+      dateEl.textContent = when;
+    }
+  }
 
   // lineup
   const lineupList = document.getElementById("lineup-list");
@@ -61,32 +68,45 @@ function renderGigDetail() {
     }
   }
 
-  // ticket / view-gig / fixed CTA
+  // ticket / view-gig / fixed / calendar CTA
   const ctaEl = document.getElementById("gig-cta");
   if (ctaEl && gig.cta) {
-    const a = document.createElement("a");
-    a.className = "gig-cta-link";
-    a.target = "_blank";
-    a.rel = "noopener";
+    // gig counts as "past" once the day itself has fully elapsed
+    const isPast = new Date() > new Date(`${gig.dateISO}T23:59:59`);
+    const links = [];
 
     if (gig.cta.fixed) {
-      a.href = gig.cta.fixed.url;
-      a.textContent = gig.cta.fixed.label;
-    } else {
-      // gig counts as "past" once the day itself has fully elapsed
-      const eventEnd = new Date(`${gig.dateISO}T23:59:59`);
-      const isPast = new Date() > eventEnd;
-
-      if (isPast) {
-        a.href = gig.cta.viewGigUrl || "https://instagram.com/splitthebill.ie";
-        a.textContent = "view the gig";
-      } else {
-        a.href = gig.cta.ticketUrl;
-        a.textContent = "tickets";
-      }
+      links.push({ label: gig.cta.fixed.label, url: gig.cta.fixed.url, external: true });
+    } else if (isPast) {
+      links.push({
+        label: "view the gig",
+        url: gig.cta.viewGigUrl || "https://instagram.com/splitthebill.ie",
+        external: true
+      });
+    } else if (gig.cta.ticketUrl) {
+      links.push({ label: "tickets", url: gig.cta.ticketUrl, external: true });
     }
 
-    ctaEl.appendChild(a);
+    if (gig.cta.calendar && !isPast) {
+      links.push({
+        label: gig.cta.calendar.label || "add event to calendar",
+        url: gig.cta.calendar.url,
+        external: false,
+        button: true
+      });
+    }
+
+    links.forEach((item) => {
+      const a = document.createElement("a");
+      a.className = item.button ? "gig-cta-link gig-cta-button" : "gig-cta-link";
+      a.href = item.url;
+      a.textContent = item.label;
+      if (item.external) {
+        a.target = "_blank";
+        a.rel = "noopener";
+      }
+      ctaEl.appendChild(a);
+    });
   }
 
   // expose the matched record so gallery.js (loaded after this file)

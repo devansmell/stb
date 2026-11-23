@@ -1,80 +1,45 @@
 <!--
-  GIG PAGE TEMPLATE
-  -----------------
-  1. Duplicate this file and rename it to match a "slug" from gigs-data.js
-     e.g. slug "whelans-dublin-2026" -> save as gigs/whelans-dublin-2026.html
-
-  2. Find/replace every {{PLACEHOLDER}} below.
-
-     {{VENUE}}          venue name, e.g. Whelans
-     {{CITY}}            city, e.g. Dublin
-     {{HEADLINE_ACT}}     act(s) on the bill, comma separated, for SEO only
-                          e.g. Band Name, Support Act
-     {{DATE_DISPLAY}}     human date, e.g. 12 Sept 2026
-     {{DATE_ISO}}         event date, ISO format, e.g. 2026-09-12
-     {{DOORS_TIME}}       human time, e.g. 8pm
-     {{DOORS_TIME_24H}}    24hr time, e.g. 20:00
-     {{TICKET_URL}}       link to buy tickets (leave as # if not on sale yet)
-     {{PRICE}}            ticket price in euro, numeric only, e.g. 15
-     {{ON_SALE_DATE}}     ISO date tickets go live, e.g. 2026-07-01
-     {{SLUG}}            must match the filename and the slug in gigs-data.js
-     {{POSTER_IMAGE}}     path to the poster, e.g. /gigs/posters/whelans-dublin-2026.jpg
-                          poster should be roughly 4:5 (portrait)
-
-  3. Edit the LINEUP array further down in the body (just above the
-     </div> that closes .gig-info). One line per act:
-
-       { name: "Band Name", instagram: "bandhandle" }
-
-     Leave instagram: "" if they don't have one / you don't want to link it.
-     This list is what renders next to the poster — it's separate from
-     {{HEADLINE_ACT}} above, which is only used for the SEO tags.
-
-  4. The [ticket link] / [view the gig] swap is automatic — gig-page.js
-     checks today's date against {{DATE_ISO}} and switches over the day
-     after the gig. GIG.viewGigUrl below defaults to the main instagram
-     as a placeholder; once photos from the gig are up, point it at that
-     specific post instead.
-
-  5. Poster doubles as the og:image / twitter:image / JSON-LD image below
-     — swap those three to {{POSTER_IMAGE}} once you've got the real
-     flyer in place (kept as the generic og-image.jpg until then).
-
-  6. This file itself (_template.html) is never linked to directly — it's
-     just the starting point for new gig pages, kept out of the listing
-     because it isn't referenced by any slug.
+  1. add the gig to gigs/gigs-data.js
+  2. copy this file to gigs/<slug>.html, slug matching the entry
+  3. replace every {{PLACEHOLDER}}:
+     {{TITLE}} page title, {{VENUE}}, {{CITY}}, {{DATE_DISPLAY}}, {{DOORS_TIME}},
+     {{HEADLINE_ACT}} acts for seo, {{SLUG}}, {{POSTER_PATH}} e.g. /gigs/posters/x.jpg (spaces as %20),
+     {{START}} / {{END}} e.g. 2026-12-17T23:59:00+00:00,
+     {{TICKET_URL}}, {{PRICE}} (delete the whole "offers" block if there is no ticket info)
 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{VENUE}}, {{CITY}} // split the bill</title>
+<title>{{TITLE}} // split the bill</title>
 <meta name="description" content="{{HEADLINE_ACT}} at {{VENUE}}, {{CITY}}. {{DATE_DISPLAY}}, doors {{DOORS_TIME}}. booked by split the bill, galway's independent gig promoters.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://splitthebill.ie/gigs/{{SLUG}}.html">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="split the bill">
-<meta property="og:title" content="{{VENUE}}, {{CITY}} // split the bill">
+<meta property="og:title" content="{{TITLE}} // split the bill">
 <meta property="og:description" content="{{HEADLINE_ACT}} at {{VENUE}}, {{CITY}}. {{DATE_DISPLAY}}, doors {{DOORS_TIME}}.">
 <meta property="og:url" content="https://splitthebill.ie/gigs/{{SLUG}}.html">
-<meta property="og:image" content="https://splitthebill.ie/assets/og-image.jpg">
+<meta property="og:image" content="https://splitthebill.ie{{POSTER_PATH}}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="en_IE">
 
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{VENUE}}, {{CITY}} // split the bill">
+<meta name="twitter:title" content="{{TITLE}} // split the bill">
 <meta name="twitter:description" content="{{HEADLINE_ACT}} at {{VENUE}}, {{CITY}}. {{DATE_DISPLAY}}, doors {{DOORS_TIME}}.">
-<meta name="twitter:image" content="https://splitthebill.ie/assets/og-image.jpg">
+<meta name="twitter:image" content="https://splitthebill.ie{{POSTER_PATH}}">
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "MusicEvent",
-  "name": "{{HEADLINE_ACT}} at {{VENUE}}",
-  "startDate": "{{DATE_ISO}}T{{DOORS_TIME_24H}}",
+  "name": "{{TITLE}}",
+  "description": "{{HEADLINE_ACT}} at {{VENUE}}, {{CITY}}.",
+  "startDate": "{{START}}",
+  "endDate": "{{END}}",
   "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
   "eventStatus": "https://schema.org/EventScheduled",
   "location": {
@@ -86,11 +51,10 @@
       "addressCountry": "IE"
     }
   },
-  "image": ["https://splitthebill.ie/assets/og-image.jpg"],
-  "performer": {
-    "@type": "PerformingGroup",
-    "name": "{{HEADLINE_ACT}}"
-  },
+  "image": ["https://splitthebill.ie{{POSTER_PATH}}"],
+  "performer": [
+    { "@type": "PerformingGroup", "name": "{{HEADLINE_ACT}}" }
+  ],
   "organizer": {
     "@type": "Organization",
     "name": "Split The Bill",
@@ -101,8 +65,7 @@
     "url": "{{TICKET_URL}}",
     "price": "{{PRICE}}",
     "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
-    "validFrom": "{{ON_SALE_DATE}}"
+    "availability": "https://schema.org/InStock"
   }
 }
 </script>
@@ -130,13 +93,13 @@
       <div class="gig-card-wrap">
         <div class="gig-card">
 
-          <div class="gig-poster">
-            <img src="{{POSTER_IMAGE}}" alt="{{VENUE}} gig poster">
+          <div class="gig-poster-wrap">
+            <img class="gig-poster" id="gig-poster" src="" alt="">
           </div>
 
           <div class="gig-info">
-            <h2 class="gig-venue">{{VENUE}}, {{CITY}}</h2>
-            <p class="gig-datetime">{{DATE_DISPLAY}} &middot; doors {{DOORS_TIME}}</p>
+            <h2 class="gig-venue" id="gig-venue"></h2>
+            <p class="gig-datetime" id="gig-datetime"></p>
 
             <ul class="lineup-list" id="lineup-list" aria-label="Lineup"></ul>
 
@@ -145,24 +108,20 @@
 
         </div>
       </div>
+
+      <div class="gig-gallery-wrap" id="gig-gallery-wrap">
+        <div class="gig-gallery">
+          <p class="gig-gallery-blurb" id="gig-gallery-blurb"></p>
+          <div class="gallery-grid" id="gallery-grid" role="list" aria-label="Photos from the night"></div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <script>
-    const GIG = {
-      eventDateISO: "{{DATE_ISO}}",
-      ticketUrl: "{{TICKET_URL}}",
-      viewGigUrl: "https://instagram.com/splitthebill.ie" // placeholder until gig photos are posted
-    };
-
-    const LINEUP = [
-      { name: "{{BAND_1_NAME}}", instagram: "{{BAND_1_INSTAGRAM_HANDLE}}" },
-      { name: "{{BAND_2_NAME}}", instagram: "{{BAND_2_INSTAGRAM_HANDLE}}" },
-      { name: "{{BAND_3_NAME}}", instagram: "{{BAND_3_INSTAGRAM_HANDLE}}" }
-      // add or remove lines as needed, leave instagram: "" if there isn't one
-    ];
-  </script>
-  <script src="/gigs/gig-page.js"></script>
+  <script>const PAGE_SLUG = "{{SLUG}}";</script>
+  <script src="/gigs/gigs-data.js"></script>
+  <script src="/gigs/gig-detail.js"></script>
+  <script src="/gigs/gallery.js"></script>
   <script src="/motion.js" defer></script>
 </body>
 </html>
