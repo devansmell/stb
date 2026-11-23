@@ -1,0 +1,43 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Copernicus II//Event Calendar//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:Europe/Dublin
+BEGIN:STANDARD
+DTSTART:19710101T020000
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0000
+TZNAME:GMT
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:35c3c49c-3ed4-4831-b59f-420b9b4fd00c@splitthebill.ie
+DTSTAMP:20261123T192031Z
+DTSTART;TZID=Europe/Dublin:20261217T235900
+DTEND;TZID=Europe/Dublin:20261218T005900
+SUMMARY:Copernicus II Live
+LOCATION:Róisín Dubh
+ORGANIZER;CN="Copernicus II":mailto:info@splitthebill.ie
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+DESCRIPTION:Hop! Step! Fly!\n\nEvery night, all over the world, hundreds of
+  people see these faces in their dreams. If this band appears in your dre
+ ams too, or if you have any information that can help us identify them, p
+ lease join us on the 17th of December at midnight in Róisín Dubh for 
+ “Copernicus II”, with support from Big Nothing.
+X-ALT-DESC;FMTTYPE=text/html:<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//E
+ N"><HTML><BODY><p><b>Hop! Step! Fly!</b></p><p>Every night, all over the 
+ world, hundreds of people see these faces in their dreams. If this band a
+ ppears in your dreams too, or if you have any information that can help u
+ s identify them, please join us <b>on the 17th of December at midnight in
+  Róisín Dubh for “Copernicus II”, with support from Big Nothing.</b
+ ></p></BODY></HTML>
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Copernicus II Live
+TRIGGER:-PT10H
+END:VALARM
+END:VEVENT
+END:VCALENDAR
