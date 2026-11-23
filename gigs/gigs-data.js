@@ -156,7 +156,7 @@ const GIGS = [
     dateISO: "2026-12-17",
     dateDisplay: "17 Dec 2026",
     doorsTime: "midnight",
-    poster: "/gigs/posters/Copernicus%20II%20poster%2017%20December.jpg",
+    poster: "/gigs/posters/Copernicusposter17Dec2026.jpg",
     lineup: [
       { name: "Copernicus II", instagram: "copernicus_ii" },
       { name: "Big Nothing", instagram: "bignothing.band" }
