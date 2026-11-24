@@ -162,7 +162,8 @@ const GIGS = [
       { name: "Big Nothing", instagram: "bignothing.band" }
     ],
     cta: {
-      viewGigUrl: "https://instagram.com/splitthebillgig",
+      viewGigUrl: "https://instagram.com/splitthebill.ie",
+	  fixed: "https://roisindubh.net/listings/copernicus-ii-2026-12-17-235900-81920",
       calendar: { label: "add event to calendar", url: "/copernicus-ii-live.ics" }
     }
   }, // 3
